@@ -30,7 +30,7 @@ var Webgl = (function(){
         // Fishes
         
         this.boidObject = new Boid(10);
-        this.boidObject.position.set(-500, -100, 0);
+        this.boidObject.position.set(0, 0, 0);
         this.scene.add(this.boidObject);
         
 
