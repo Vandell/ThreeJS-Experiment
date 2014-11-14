@@ -28,7 +28,7 @@ var Grass = (function(){
             })
         ];
 
-        for (var i = 0; i < 10000 ; i++) {
+        for (var i = 0; i < 7500 ; i++) {
 
             //var random = Math.floor(Math.random() * 3) + 0;
 

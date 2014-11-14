@@ -1,10 +1,10 @@
 var Fish = (function(){
 
-    function Fish(){
+    function Fish(color){
         THREE.Object3D.call(this);
 
         // White Eye
-        var geometryWhiteEye = new THREE.CylinderGeometry(10, 10, 35, 32); 
+        var geometryWhiteEye = new THREE.CylinderGeometry(10, 10, 20, 32); 
         var materialWhiteEye = new THREE.MeshPhongMaterial({
             ambient: 0x000000, 
             color: 0xFFFFFF, 
@@ -18,7 +18,7 @@ var Fish = (function(){
         this.add(this.whiteEye);
 
         // Black Eye
-        var geometryBlackEye = new THREE.CylinderGeometry(5, 5, 37, 32); 
+        var geometryBlackEye = new THREE.CylinderGeometry(5, 5, 22, 32); 
         var materialBlackEye = new THREE.MeshPhongMaterial({
             ambient: 0x000000, 
             color: 0x000000, 
@@ -54,7 +54,7 @@ var Fish = (function(){
 		var geometryCorps = new THREE.ExtrudeGeometry(fishShape, extrudeSettings); 
 		var materialCorps = new THREE.MeshPhongMaterial({
             ambient: 0x000000, 
-            color: 0xCBBEB5, 
+            color: color, 
             specular: 0xAAAAAA, 
             shininess: 5, 
             shading: THREE.FlatShading
@@ -74,22 +74,9 @@ var Fish = (function(){
 
     Fish.prototype.update = function() {
 
-        var time = Date.now() / 2000;
-        var phase = 0;
-        //this.rotation.y = Math.sin(time) * 0.05;
-
         TweenMax.to(this.rotation, 0.3, {y: (Math.atan2(-this.velocity.z, -this.velocity.x)), z: (-Math.asin(this.velocity.y / this.velocity.length()) * 0.2), ease:Linear.easeNone});
         //this.rotation.y = Math.atan2(-this.velocity.z, -this.velocity.x);
         //this.rotation.z = -Math.asin(this.velocity.y / this.velocity.length()) * 0.2;
-
-    	//this.rotation.y -= 0.01;
-        //if(this.position.x > 0)
-    	//this.position.x -= 5;
-
-        /*
-        this.velocity = new THREE.Vector3(-Math.random(), 0, 0);
-        this.velocity.x -= Math.random() * 0.1;
-*/      
     };
 
     return Fish;

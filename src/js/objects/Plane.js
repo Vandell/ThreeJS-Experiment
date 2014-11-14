@@ -3,7 +3,7 @@ var Plane = (function(){
     function Plane(){
         THREE.Object3D.call(this);
 
-        var geometry = new THREE.PlaneGeometry(2000, 600);
+        var geometry = new THREE.PlaneBufferGeometry(2000, 600);
         var material = new THREE.MeshPhongMaterial({
             ambient: 0x000000, 
             color: 0x002654, 

@@ -1,13 +1,13 @@
 var Boid = (function(){
 
-    function Boid(nbFishes){
+    function Boid(nbFishes, color){
         THREE.Object3D.call(this);
 
         var fishes = [];
 
         for (var i = 0 ; i < nbFishes ; i++) {
 
-          var fish = new Fish();
+          var fish = new Fish(color);
           fish.position.set((Math.random()*800)-400, (Math.random()*200)-100, (Math.random()*200)-100);
           fish.velocity = new THREE.Vector3(1, 1, 1);
           fishes.push(fish);
@@ -178,7 +178,7 @@ var Boid = (function(){
     }
 
     Boid.prototype.fleeMouse = function(mouseVector, currentBoid) {
-        
+
         var distanceX = 0;
         var distanceY = 0;
         var numClose = 0;

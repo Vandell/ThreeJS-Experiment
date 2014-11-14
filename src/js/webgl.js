@@ -28,11 +28,18 @@ var Webgl = (function(){
         this.scene.add(this.planeObject);
 
         // Fishes
-        
-        this.boidObject = new Boid(10);
+        this.boidObject = new Boid(10, 0xAEAEAE);
         this.boidObject.position.set(0, 0, 0);
         this.scene.add(this.boidObject);
         
+        this.boid2Object = new Boid(10, 0x520B6B);
+        this.boid2Object.position.set(0, 0, 0);
+        this.scene.add(this.boid2Object);
+
+        //Particles
+        this.particleObject = new Particle();
+        this.particleObject.position.set(0, 0, 0);
+        this.scene.add(this.particleObject);
 
         // Plant
     /*
@@ -69,25 +76,41 @@ var Webgl = (function(){
 
     Webgl.prototype.render = function() {
         // MOUSE GESTURE
-        var vector = new THREE.Vector3(mouse.x, mouse.y, 1).unproject(this.camera);
+        var vector = new THREE.Vector3(mouse.x, mouse.y, 0).unproject(this.camera);
         raycaster.set(this.camera.position, vector.sub(this.camera.position).normalize());
         var intersect = raycaster.intersectObject(this.scene.children[3], true);
 
         if (intersect.length > 0) {
-/*
-            for (var i = 0; i < intersect.length; i++) {
-                this.boidObject.fleeMouse(vector, intersect[i].object.parent);
-            };
-*/
+
             if (INTERSECTED != intersect[0].object) {
                 if (INTERSECTED) 
                     INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
 
                 INTERSECTED = intersect[0].object;
                 INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-                INTERSECTED.material.emissive.setHex(0xFF6666);
+                INTERSECTED.material.emissive.setHex(0xAAAAAA);
 
                 this.boidObject.fleeMouse(vector, intersect[0].object.parent);
+/*
+                for(var i = 0; i < this.boidObject.children.length; i++) {
+
+                    var boid = this.boidObject.children[i];
+                    vector.z = boid.position.z;
+
+                    var distance = boid.position.distanceTo(vector);
+                    var minDistance = 50;
+                    
+                    if(distance < minDistance) {
+                        var steer = new THREE.Vector3();
+
+                        steer.subVectors(boid.position, vector);
+                        steer.multiplyScalar(0.5 / distance);
+
+                        boid.velocity.x -= steer.x;
+                        boid.velocity.y -= steer.y;
+                        boid.velocity.z -= steer.z;
+                    }
+                }*/
             }
         } 
         else {
@@ -102,6 +125,8 @@ var Webgl = (function(){
 
         this.grassObject.update();
         this.boidObject.update();
+        this.boid2Object.update();
+        this.particleObject.update();
         //this.sharkObject.update();
     };
 
